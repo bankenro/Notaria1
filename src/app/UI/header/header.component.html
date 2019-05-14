@@ -1,0 +1,13 @@
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <h1>Sistema Notaria</h1>
+</div>
+<mat-toolbar [fxShow]="true" color="primary" *ngIf="logeado" ngDefaultControl>
+  <span>
+    Inicio
+  </span>
+  <span class="fill-remaining-space"></span>
+  <button mat-button routerLink="escrituras">Escrituras</button>
+  <button mat-button routerLink="usuarios">Usuarios</button>
+  <span fxFlex></span>
+  <button mat-button (click)="Salir()">Salir</button>
+</mat-toolbar>

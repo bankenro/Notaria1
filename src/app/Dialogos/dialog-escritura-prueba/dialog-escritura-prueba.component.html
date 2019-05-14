@@ -1,0 +1,25 @@
+<mat-dialog-content id="pdf">
+  <p>
+    {{precio}}
+  </p>
+
+  <p>
+    {{ubicacion}}
+  </p>
+
+  <p>
+    {{descr}}
+  </p>
+
+  <p>
+    {{tipo}}
+  </p>
+  <p>
+    {{iddocumento}}
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <span fxFlex></span>
+  <button class="text-white" mat-button color="primary" (click)="Retroceder()">Retroceder</button>
+  <button class="text-white" mat-button color="primary" (click)="Guardar()">Guardar</button>
+</mat-dialog-actions>

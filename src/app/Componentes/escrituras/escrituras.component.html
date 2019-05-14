@@ -1,0 +1,79 @@
+<mat-divider style="height: 20px; margin: 05px;" [inset]="true"></mat-divider>
+<div class="divbar">
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-select placeholder="Documentos" formControlName="iddocumento" (selectionChange)="MostrarEscrituras()">
+        <mat-option *ngFor="let item of documentos" [value]="item.id"> {{item.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-divider style=" margin: 10px;" [vertical]="true"></mat-divider>
+    <mat-form-field>
+      <mat-select placeholder="Escrituras" formControlName="idescritura" (selectionChange)="MostrarEscrituras()">
+        <mat-option *ngFor="let item of escrituras" [value]="item.id"> {{item.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span fxFlex></span>
+    <button mat-button color="primary" (click)="openDialog()">
+      <i class="fa fa-plus-square"></i> Escrituras
+    </button>
+  </form>
+</div>
+<mat-divider style="height: 20px; margin: 05px;" [inset]="true"></mat-divider>
+
+<div fxLayout fxLayoutAlign="center center">
+  <mat-form-field fxFlex="40%">
+    <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
+</mat-form-field>
+</div>
+
+<div class="mat-elevation-z8 ventas-table">
+
+  <mat-table [dataSource]="dataSource" matSort matSortStart="desc">
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="documento">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>DOCS.</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.documento}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actores">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>ACTORES</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.actores}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="usuario">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>USUARIO</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.usuario}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="estado">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>ESTADO</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.estado}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="ubicacionf">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>UBIC. FISICA</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.ubicacionf}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="ubicacionv">
+      <mat-header-cell *matHeaderCellDef>UBIC. VIRTUAL</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button color="primary" (click)="AbrirPDF(row.ubicacionv)">
+          <i class="fa fa-file"></i>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+  </mat-table>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 30, 50, 80, 100]">
+  </mat-paginator>
+</div>

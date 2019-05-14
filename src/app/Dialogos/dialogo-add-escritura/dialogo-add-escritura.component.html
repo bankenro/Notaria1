@@ -1,0 +1,146 @@
+<ngb-alert *ngIf="mensaje" type="danger" (close)="mensaje = null">{{ mensaje }}</ngb-alert>
+<mat-dialog-content>
+  <form [formGroup]="form1" (ngSubmit)="GuardarDoc()" *ngIf="formv" >
+    <mat-form-field class="example-full-width" >
+      <mat-select placeholder="Documentos" formControlName="iddocumento">
+        <mat-option *ngFor="let item of documentos" [value]="item.id"> {{item.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput type="number" formControlName="precio" placeholder="Precio">
+      <mat-error *ngIf="isFieldInvalid('precio')">
+        Ingrese el precio
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput type="text" formControlName="ubicacion"  placeholder="Ubicacion">
+      <mat-error *ngIf="isFieldInvalid('ubicacion')">
+        Ingrese la ubicacion fisica del documento
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput type="text" formControlName="descripcion" placeholder="Descripcion">
+      <mat-error *ngIf="isFieldInvalid('descripcion')">
+        Ingrese una descripcion
+      </mat-error>
+    </mat-form-field>
+    <div class="d-flex justify-content-center">
+      <button class="text-white" mat-button color="primary" type="submit">Guardar</button>
+    </div>
+  </form>
+  <mat-divider style="height: 20px; margin: 10px;" [inset]="true"></mat-divider>
+  <form [formGroup]="form2" (ngSubmit)="AgregarActores()">
+    <mat-form-field class="">
+      <mat-select placeholder="Tipo actor" formControlName="idtipoa">
+        <mat-option *ngFor="let item of tiposa" [value]="item.id"
+                    (onSelectionChange)="TipoaSeleccionado(item.id,item.nombre)"> {{item.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput type="number" formControlName="dni" placeholder="DNI">
+      <mat-error *ngIf="isFieldInvalid2('dni')">
+        Ingrese el DNI
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput type="text" formControlName="nombre"  placeholder="Nombre Completo">
+      <mat-error *ngIf="isFieldInvalid2('nombre')">
+        Ingrese el nombre Completo
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput type="number" formControlName="telefono" placeholder="Telefono">
+      <mat-error *ngIf="isFieldInvalid2('telefono')">
+        Ingrese telefono
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-select placeholder="Estado Civil" formControlName="idestadoc">
+        <mat-option *ngFor="let item of estadosc" [value]="item.id"
+                    (onSelectionChange)="Estadocselecionado(item.id,item.nombre)"> {{item.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input type="text" placeholder="Ciudad" matInput formControlName="ciudad" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option style="width:2000px;" *ngFor="let item of ciudadesfilter | async"
+                    (onSelectionChange)="CiudadSeleccionada(item.id,item.nombre)" [value]="item.nombre">
+          {{item.nombre}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput type="text" formControlName="direccion" placeholder="Direccion">
+      <mat-error *ngIf="isFieldInvalid2('direccion')">
+        Ingrese telefono
+      </mat-error>
+    </mat-form-field>
+
+    <div class="d-flex justify-content-center">
+      <button class="text-white" mat-button color="primary" type="submit">Agregar</button>
+    </div>
+  </form>
+  <mat-divider style="height: 20px; margin: 10px;" [inset]="true"></mat-divider>
+  <div class="mat-elevation-z8 ventas-table">
+    <div class="d-flex justify-content-center">
+      <h4>ACTORES</h4>
+    </div>
+    <mat-table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="dni">
+        <mat-header-cell *matHeaderCellDef>DNI</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.dni}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef>NOMBRE</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.nombre}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="tipoactor">
+        <mat-header-cell *matHeaderCellDef>TIPO A.</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.tipoactor}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="estadocivil">
+        <mat-header-cell *matHeaderCellDef>ESTADO C.</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.estadocivil}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="ciudad">
+        <mat-header-cell *matHeaderCellDef>CIUDAD</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.ciudad}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="eliminar">
+        <mat-header-cell *matHeaderCellDef>ELIMINAR</mat-header-cell>
+        <mat-cell *matCellDef="let row; let i = index">
+          <button mat-icon-button color="warn" (click)="Eliminar(i)">
+            <i class="fa fa-trash"></i>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+    </mat-table>
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <span fxFlex></span>
+  <button class="text-white" mat-button color="primary" (click)="Cancelar()">Cancelar</button>
+  <button class="text-white" mat-button color="primary" (click)="Mostrar()">Mostrar</button>
+</mat-dialog-actions>
